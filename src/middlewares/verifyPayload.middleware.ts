@@ -1,13 +1,13 @@
 import { NextFunction, Request, Response } from "express";
 import { validMovieRegister } from "../schemas/movies.schemas";
 
-const verifyPayloadCreateMovie = async (req: Request, res: Response, next: NextFunction) => {
+const verifyPayloadCreateMovie = async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
 
 
     const payloadIsValid = validMovieRegister.safeParse(req.body);
     if (!payloadIsValid.success) {
         const errs = payloadIsValid.error.flatten().fieldErrors;
-        return res.status(400).json(errs);
+        return res.status(400).json({ message: errs });
     }
     const validMovie = validMovieRegister.parse(req.body);
     res.locals.validMoviePayload = validMovie;
