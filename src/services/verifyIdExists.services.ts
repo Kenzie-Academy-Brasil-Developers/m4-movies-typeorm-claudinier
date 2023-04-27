@@ -2,13 +2,13 @@ import { Repository } from "typeorm";
 import { AppDataSource } from "../data-source";
 import { Movie } from "../entities";
 
-const verifyNameExists = async (nameMovie:string): Promise<boolean> => {
+const verifyIdExists = async (idMovie:number): Promise<boolean> => {
     
     const movieRepo: Repository<Movie> = AppDataSource.getRepository(Movie);
     
-    const movie = await movieRepo.exist({where: {name: nameMovie }});
-    
+    const movie = await movieRepo.exist({where: {id: idMovie }});
+
     return movie;
 }
 
-export default verifyNameExists;
+export default verifyIdExists;
